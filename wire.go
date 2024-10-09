@@ -39,3 +39,30 @@ func InitializeAppV3() *gin.Engine {
 	)
 	return &gin.Engine{}
 }
+
+type Name string
+
+func NewName() Name {
+	return "陈明勇"
+}
+
+type PublicAccount string
+
+func NewPublicAccount() PublicAccount {
+	return "公众号:Go技术干货"
+}
+
+type User struct {
+	MyName          Name
+	MyPublicAccount PublicAccount
+}
+
+// 结构体提供者（Struct Providers）
+func InitializeUser() *User {
+	wire.Build(
+		NewName,
+		NewPublicAccount,
+		wire.Struct(new(User), "MyName", "MyPublicAccount"),
+	)
+	return &User{}
+}
